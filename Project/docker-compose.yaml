@@ -1,0 +1,25 @@
+version: '3.2'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    runtime: runc
+    volumes:
+      - hp-project-mongodb:/data/db
+  
+  node-server:
+    image: hp-project-server
+    container_name: node-server
+    runtime: runc
+    volumes:
+      - ./server:/app 
+      - node_modules-hp-pro:/app/node_modules
+    ports:
+      - '80:80'
+    depends_on:
+      - mongodb 
+
+volumes:
+  hp-project-mongodb:
+  node_modules-hp-pro:
